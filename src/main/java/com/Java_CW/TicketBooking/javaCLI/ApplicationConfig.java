@@ -21,6 +21,7 @@ public class ApplicationConfig {
 	static int maxTicketCapacity;
 	
 	static TicketPool ticketPool = new TicketPool();
+	static BasicConfiguration configuration = new BasicConfiguration();
 
 	public static void main(String[] args) {
 		
@@ -52,8 +53,12 @@ public class ApplicationConfig {
 		        break;
 		        
 			case "save-config":
-				BasicConfiguration test = new BasicConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
-				test.saveConfigarations(test);
+//				BasicConfiguration test = new BasicConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
+				configuration.setTotalTickets(totalTickets);
+				configuration.setTicketReleaseRate(ticketReleaseRate);
+				configuration.setCustomerRetrievalRate(customerRetrievalRate);
+				configuration.setMaxTicketCapacity(maxTicketCapacity);
+				configuration.saveConfigarations(configuration);
 				break;
 		        
 			case "help":
@@ -64,52 +69,81 @@ public class ApplicationConfig {
 				System.out.println("\t\t"+GREEN_BOLD+"exit"+RESET+"            Quit");
 				
 				System.out.println(ticketPool.getSynchronizedList());
-				BasicConfiguration test2 = new BasicConfiguration();
-				test2.loadConfigarations();
+//				BasicConfiguration test2 = new BasicConfiguration();
+				configuration.loadConfigarations();
 
 				break;
 				
 			case "rt":
-				Vendor v1 = new Vendor(1, ticketPool);
-				Vendor v2 = new Vendor(2, ticketPool);
+				Vendor v1 = new Vendor(1, ticketPool, configuration);
+				Vendor v2 = new Vendor(2, ticketPool, configuration);
+				
+				Customer c1 = new Customer(1, ticketPool, configuration);
+				Customer c2 = new Customer(2, ticketPool, configuration);
+				Customer c3 = new Customer(3, ticketPool, configuration);
+				Customer c4 = new Customer(4, ticketPool, configuration);
+				Customer c5 = new Customer(5, ticketPool, configuration);
 
 				Thread t1 = new Thread(v1);
 				Thread t2 = new Thread(v2);
+				Thread t3 = new Thread(c1);
+				Thread t4 = new Thread(c2);
+				Thread t5 = new Thread(c3);
+				Thread t6 = new Thread(c4);
+				Thread t7 = new Thread(c5);
 
-				t1.start();
-				t2.start();
 				try {
+					t1.start();
+					Thread.sleep(10);
+					t2.start();
+					Thread.sleep(10);
+					t3.start();
+					Thread.sleep(10);
+					t4.start();
+					Thread.sleep(10);
+					t5.start();
+					Thread.sleep(10);
+					t6.start();
+					Thread.sleep(10);
+					t7.start();
+					Thread.sleep(10);
+					
 			        t1.join();
 			        t2.join();
+			        t3.join();
+					t4.join();
+					t5.join();
+					t6.join();
+					t7.join();
 			    } catch (InterruptedException e) {
 			        e.printStackTrace();
 			    }
 				break;
 				
 			case "bt":
-				Customer c1 = new Customer(1, ticketPool);
-				Customer c2 = new Customer(2, ticketPool);
-				Customer c3 = new Customer(3, ticketPool);
-				Customer c4 = new Customer(4, ticketPool);
-				Customer c5 = new Customer(5, ticketPool);
 				
-				Thread t3 = new Thread(c1);
-				Thread t4 = new Thread(c2);
-				Thread t5 = new Thread(c3);
-				Thread t6 = new Thread(c4);
-				Thread t7 = new Thread(c5);
+				int vendorCount = 4;
+				int customerCount = 7;
 				
-				t3.start();
-				t4.start();
-				t5.start();
-				t6.start();
-				t7.start();
+				Thread[] threads = new Thread[vendorCount+customerCount];
+				
+				
+				for(int i=0 ; i<vendorCount ; i++) {
+					threads[i] = new Thread(new Vendor(i, ticketPool, configuration));
+				}
+				
+				for(int i=0 ; i<customerCount ; i++) {
+					threads[vendorCount+i] = new Thread(new Customer(i, ticketPool, configuration));
+				}
+				
 				try {
-					t3.join();
-					t4.join();
-					t5.join();
-					t6.join();
-					t7.join();
+					for (Thread thread : threads) {
+						thread.start();
+//						Thread.sleep(100);
+					}
+					for(Thread thread : threads) {
+						thread.join();
+					}
 			    } catch (InterruptedException e) {
 			        e.printStackTrace();
 			    }

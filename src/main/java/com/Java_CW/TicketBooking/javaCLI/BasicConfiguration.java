@@ -74,12 +74,14 @@ public class BasicConfiguration {
         }
 	}
 	
-	public void loadConfigarations() {
+	public BasicConfiguration loadConfigarations() {
 		try (FileReader reader = new FileReader("src/main/resources/config.json")) { // this method automatically close the file
             BasicConfiguration config = gson.fromJson(reader, BasicConfiguration.class);
-            System.out.println(config.totalTickets);
+//            System.out.println(config.totalTickets);
+            return config;
         } catch (IOException e) {       // handle the error if file was there ??
             e.printStackTrace();
+            return null;
         }
 
 	}

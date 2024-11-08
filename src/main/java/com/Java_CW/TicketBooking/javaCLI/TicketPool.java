@@ -18,7 +18,7 @@ public class TicketPool {
 	
 	public synchronized void removeTicket(int id) {
 		if (tickets.isEmpty()) {
-            System.out.println("No tickets available.");
+            System.out.println("Customer "+id+" tried but No tickets available.");
             return;
         }
 		System.out.println("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
