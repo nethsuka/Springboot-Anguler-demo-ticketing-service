@@ -1,11 +1,17 @@
 package com.Java_CW.TicketBooking.javaCLI;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class Vendor implements Runnable{
 	
 	private int venderId;
 	private TicketPool TicketPoolObj;
 	private BasicConfiguration config;
 	private static int numOfReleasedTickets = 0;
+	
+    private static final Logger logger = LogManager.getLogger(Vendor.class); // logger instance
+
 
 	public Vendor(int venderId, TicketPool TicketPoolObj, BasicConfiguration config) {
 		super();
@@ -40,7 +46,8 @@ public class Vendor implements Runnable{
 	            	Ticket t1 = new Ticket("v"+venderId+"t"+i);
 					TicketPoolObj.addTickets(t1);
 					setNumOfReleasedTickets(getNumOfReleasedTickets() + 1);
-					System.out.println("vendor "+venderId+" added "+"v"+venderId+"t"+i);
+//					System.out.println("vendor "+venderId+" added "+"v"+venderId+"t"+i);
+					logger.info("vendor "+venderId+" added "+"v"+venderId+"t"+i);
             	}else {
             		break;
             	}

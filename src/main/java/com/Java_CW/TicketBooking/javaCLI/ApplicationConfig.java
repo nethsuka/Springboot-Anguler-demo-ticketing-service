@@ -172,7 +172,7 @@ public class ApplicationConfig {
                 break;
             } catch (InputMismatchException e) {
 //                System.out.println(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
-                logger.warn(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
+                logger.error(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
             }
         }
@@ -190,7 +190,7 @@ public class ApplicationConfig {
 				break;
 			} catch(InputMismatchException e) {
 //				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
 			}
 		}
@@ -208,7 +208,7 @@ public class ApplicationConfig {
 				break;
 			} catch(InputMismatchException e) {
 //				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
 				scannerObj.next();
 			}
 		}
@@ -226,7 +226,7 @@ public class ApplicationConfig {
 				break;
 			} catch(InputMismatchException e) {
 //				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
 
 				scannerObj.next();
 			}

@@ -4,14 +4,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class TicketPool {
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-//    private List<Ticket> tickets;
+public class TicketPool {
 	
 //	private static int numOfReleasedTickets;
     
     List<Ticket> tickets = new ArrayList<>();
     List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
+    
+    private static final Logger logger = LogManager.getLogger(TicketPool.class); // logger instance
+
 
 //    BasicConfiguration config = new BasicConfiguration();
 	
@@ -23,10 +27,12 @@ public class TicketPool {
 	
 	public synchronized void removeTicket(int id) {
 		if (synchronizedList.isEmpty()) {
-            System.out.println("Customer "+id+" tried but No tickets available.");
+//            System.out.println("Customer "+id+" tried but No tickets available.");
+            logger.info("Customer "+id+" tried but No tickets available.");
             return;
         }
-		System.out.println("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
+//		System.out.println("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
+		logger.info("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
         synchronizedList.remove(0);
 	}
 
