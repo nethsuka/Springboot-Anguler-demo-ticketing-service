@@ -75,22 +75,16 @@ public class ApplicationConfig {
 				break;
 				
 			case "rt":
-				Vendor v1 = new Vendor(1, ticketPool, configuration);
-				Vendor v2 = new Vendor(2, ticketPool, configuration);
-				
-				Customer c1 = new Customer(1, ticketPool, configuration);
-				Customer c2 = new Customer(2, ticketPool, configuration);
-				Customer c3 = new Customer(3, ticketPool, configuration);
-				Customer c4 = new Customer(4, ticketPool, configuration);
-				Customer c5 = new Customer(5, ticketPool, configuration);
 
-				Thread t1 = new Thread(v1);
-				Thread t2 = new Thread(v2);
-				Thread t3 = new Thread(c1);
-				Thread t4 = new Thread(c2);
-				Thread t5 = new Thread(c3);
-				Thread t6 = new Thread(c4);
-				Thread t7 = new Thread(c5);
+				configuration.loadConfigarations().getTotalTickets();
+				Thread t1 = new Thread(new Vendor(1, ticketPool, configuration));
+				Thread t2 = new Thread(new Vendor(2, ticketPool, configuration));
+				
+				Thread t3 = new Thread(new Customer(1, ticketPool, configuration));
+				Thread t4 = new Thread(new Customer(2, ticketPool, configuration));
+				Thread t5 = new Thread(new Customer(3, ticketPool, configuration));
+				Thread t6 = new Thread(new Customer(4, ticketPool, configuration));
+				Thread t7 = new Thread(new Customer(5, ticketPool, configuration));
 
 				try {
 					t1.start();
