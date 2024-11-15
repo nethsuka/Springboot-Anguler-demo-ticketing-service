@@ -3,6 +3,9 @@ package com.Java_CW.TicketBooking.javaCLI;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 public class ApplicationConfig {
 
 	public static final String CYAN = "\033[36m";     // Cyan
@@ -11,6 +14,7 @@ public class ApplicationConfig {
     public static final String YELLOW_BOLD = "\033[1;38;5;221m";   // Yellow Bold
     public static final String GREEN_BOLD = "\033[1;38;5;46m";    // Green Bold
     public static final String Lightblue = "\033[38;5;153m";
+    private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
 
 
 	static Scanner scannerObj = new Scanner(System.in);
@@ -70,13 +74,13 @@ public class ApplicationConfig {
 				
 				System.out.println(ticketPool.getSynchronizedList());
 //				BasicConfiguration test2 = new BasicConfiguration();
-				configuration.loadConfigarations();
+//				configuration.loadConfigarations();
 
 				break;
 				
 			case "rt":
 
-				configuration.loadConfigarations().getTotalTickets();
+//				configuration.loadConfigarations().getTotalTickets();
 				Thread t1 = new Thread(new Vendor(1, ticketPool, configuration));
 				Thread t2 = new Thread(new Vendor(2, ticketPool, configuration));
 				
@@ -167,7 +171,8 @@ public class ApplicationConfig {
             	validTotalTickets = scannerObj.nextInt();
                 break;
             } catch (InputMismatchException e) {
-                System.out.println(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
+//                System.out.println(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
+                logger.warn(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
             }
         }
@@ -184,7 +189,8 @@ public class ApplicationConfig {
 				validTicketReleaseRate = scannerObj.nextDouble();
 				break;
 			} catch(InputMismatchException e) {
-				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
 			}
 		}
@@ -201,7 +207,8 @@ public class ApplicationConfig {
 				validCustomerRetrievalRate = scannerObj.nextDouble();
 				break;
 			} catch(InputMismatchException e) {
-				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
 				scannerObj.next();
 			}
 		}
@@ -218,7 +225,9 @@ public class ApplicationConfig {
 				validMaxTicketCapacity = scannerObj.nextInt();
 				break;
 			} catch(InputMismatchException e) {
-				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+                logger.warn(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+
 				scannerObj.next();
 			}
 		}

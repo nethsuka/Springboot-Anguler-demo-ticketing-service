@@ -38,12 +38,12 @@ public class TicketPool {
 		this.synchronizedList = synchronizedList;
 	}
 
-	public static int getNumOfReleasedTickets() {
-		return numOfReleasedTickets;
-	}
-
-	public static void setNumOfReleasedTickets(int numOfReleasedTickets) {
-		TicketPool.numOfReleasedTickets = numOfReleasedTickets;
-	}
+//	public static int getNumOfReleasedTickets() {
+//		return numOfReleasedTickets;
+//	}
+//
+//	public static void setNumOfReleasedTickets(int numOfReleasedTickets) {
+//		TicketPool.numOfReleasedTickets = numOfReleasedTickets;
+//	}
 	
 }
