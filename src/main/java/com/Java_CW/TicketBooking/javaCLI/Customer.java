@@ -1,5 +1,6 @@
 package com.Java_CW.TicketBooking.javaCLI;
 
+
 public class Customer implements Runnable{
 	
 	private int customerId;
@@ -16,22 +17,10 @@ public class Customer implements Runnable{
 
 	@Override
 	public void run() {
-		for (int i = 0; i < config.loadConfigarations().getCustomerRetrievalRate(); i++) {
-			ticketPool.removeTicket(customerId);
-//			try {
-//				Thread.sleep(30);
-//			} catch (InterruptedException e) {
-//				e.printStackTrace();
-//			}
-		}
-		
-//		try {
-//			Thread.sleep(100);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		}
-		
-		
-//		ticketPool.removeTicket(customerId);
+
+        while (ticketPool.getTotalTicketsSold() < config.loadConfigarations().getTotalTickets()) {
+            ticketPool.removeTicket(customerId);
+        }
 	}
+	
 }

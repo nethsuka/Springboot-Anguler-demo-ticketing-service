@@ -9,32 +9,53 @@ import org.apache.logging.log4j.Logger;
 
 public class TicketPool {
 	
-//	private static int numOfReleasedTickets;
     
     List<Ticket> tickets = new ArrayList<>();
     List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
     
+    private static int ticketNo = 0;
+    private int totalTicketsReleased = 0;
+    private int totalTicketsSold = 0;
+    
     private static final Logger logger = LogManager.getLogger(TicketPool.class); // logger instance
 
 
-//    BasicConfiguration config = new BasicConfiguration();
+    BasicConfiguration config = new BasicConfiguration();
+    
+    public synchronized void addTickets(int vendorId, double ticketReleaseRate) {
+        for (int i = 0; i < ticketReleaseRate; i++) {
+            if (totalTicketsReleased >= config.loadConfigarations().getTotalTickets()) {
+                logger.info("Vendor " + vendorId + " cannot add more tickets. Tickets are finished.");
+                break;
+            }
+            ticketNo += 1;
+            Ticket ticket = new Ticket(ticketNo);
+            synchronizedList.add(ticket);
+            totalTicketsReleased++;
+            logger.info("Vendor " + vendorId + " added ticket " + ticketNo);
+        }
+    }
+
 	
-	public synchronized void addTickets(Ticket tName) {
-//		if(synchronizedList.size() <= config.loadConfigarations().getMaxTicketCapacity())
-		synchronizedList.add(tName);
-//		numOfReleasedTickets++;
-	}
-	
-	public synchronized void removeTicket(int id) {
+	public synchronized void removeTicket(int customerId) {
 		if (synchronizedList.isEmpty()) {
-//            System.out.println("Customer "+id+" tried but No tickets available.");
-            logger.info("Customer "+id+" tried but No tickets available.");
+            logger.info("Customer "+customerId+" tried but No tickets available.");
             return;
         }
-//		System.out.println("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
-		logger.info("ticket "+synchronizedList.get(0).getName()+" bought by customer "+id);
+		logger.info("ticket "+synchronizedList.get(0).getTickitId()+" bought by customer "+customerId);
         synchronizedList.remove(0);
+        totalTicketsSold += 1;
 	}
+
+	public int getTotalTicketsSold() {
+		return totalTicketsSold;
+	}
+
+
+	public void setTotalTicketsSold(int totalTicketsSold) {
+		this.totalTicketsSold = totalTicketsSold;
+	}
+
 
 	public List<Ticket> getSynchronizedList() {
 		return synchronizedList;
@@ -44,12 +65,12 @@ public class TicketPool {
 		this.synchronizedList = synchronizedList;
 	}
 
-//	public static int getNumOfReleasedTickets() {
-//		return numOfReleasedTickets;
-//	}
-//
-//	public static void setNumOfReleasedTickets(int numOfReleasedTickets) {
-//		TicketPool.numOfReleasedTickets = numOfReleasedTickets;
-//	}
+	public int getTotalTicketsReleased() {
+		return totalTicketsReleased;
+	}
+	
+	public void setTotalTicketsReleased(int totalTicketsReleased) {
+		this.totalTicketsReleased = totalTicketsReleased;
+	}
 	
 }

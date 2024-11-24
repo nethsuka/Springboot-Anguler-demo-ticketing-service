@@ -13,7 +13,8 @@ public class ApplicationConfig {
     public static final String RED = "\033[31m";    // Red color
     public static final String YELLOW_BOLD = "\033[1;38;5;221m";   // Yellow Bold
     public static final String GREEN_BOLD = "\033[1;38;5;46m";    // Green Bold
-    public static final String Lightblue = "\033[38;5;153m";
+    public static final String Lightblue = "\033[38;5;123m";
+    
     private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
 
 
@@ -67,20 +68,23 @@ public class ApplicationConfig {
 		        
 			case "help":
 				System.out.println(RESET+"\n\tCommands:");
+				System.out.println("\t\t"+GREEN_BOLD+"start"+RESET+"           start the simulaion");
 				System.out.println("\t\t"+GREEN_BOLD+"config"+RESET+"          Make configurations");
 				System.out.println("\t\t"+GREEN_BOLD+"save-config"+RESET+"     Save configurations");
+				System.out.println("\t\t"+GREEN_BOLD+"show-config"+RESET+"     Show configurations");
 				System.out.println("\t\t"+GREEN_BOLD+"help"+RESET+"            Get help");
 				System.out.println("\t\t"+GREEN_BOLD+"exit"+RESET+"            Quit");
 				
 				System.out.println(ticketPool.getSynchronizedList());
 //				BasicConfiguration test2 = new BasicConfiguration();
 //				configuration.loadConfigarations();
-
 				break;
 				
-			case "rt":
+			case "start":
 
-//				configuration.loadConfigarations().getTotalTickets();
+				ticketPool.setTotalTicketsReleased(0);
+				ticketPool.setTotalTicketsSold(0);
+				
 				Thread t1 = new Thread(new Vendor(1, ticketPool, configuration));
 				Thread t2 = new Thread(new Vendor(2, ticketPool, configuration));
 				
@@ -92,19 +96,12 @@ public class ApplicationConfig {
 
 				try {
 					t1.start();
-					Thread.sleep(10);
 					t2.start();
-					Thread.sleep(10);
 					t3.start();
-					Thread.sleep(10);
 					t4.start();
-					Thread.sleep(10);
 					t5.start();
-					Thread.sleep(10);
 					t6.start();
-					Thread.sleep(10);
 					t7.start();
-					Thread.sleep(10);
 					
 			        t1.join();
 			        t2.join();
@@ -145,6 +142,14 @@ public class ApplicationConfig {
 			    } catch (InterruptedException e) {
 			        e.printStackTrace();
 			    }
+				break;
+				
+			case "show-config":
+				System.out.println();
+				System.out.println(RESET+"Maximaum Ticket capacity in ticket pool - "+Lightblue+configuration.getMaxTicketCapacity()+RESET);
+				System.out.println(RESET+"Total number of tickets available in ticket pool - "+Lightblue+configuration.getTotalTickets()+RESET);
+				System.out.println(RESET+"Vendors' ticket release rate - "+Lightblue+configuration.getTicketReleaseRate()+RESET);
+				System.out.println(RESET+"Customers' ticket buying rate - "+Lightblue+configuration.getCustomerRetrievalRate()+RESET); 
 				break;
 				
 			case "exit":
