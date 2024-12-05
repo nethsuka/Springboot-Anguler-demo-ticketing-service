@@ -4,8 +4,11 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
+import org.springframework.stereotype.Component;
+
 import com.google.gson.Gson;
 
+@Component
 public class BasicConfiguration {
 
     public static final String Lightblue = "\033[48;5;155m"; // Light blue color
@@ -20,7 +23,7 @@ public class BasicConfiguration {
 	private int maxTicketCapacity;
 	
 	public BasicConfiguration() {
-		super();
+		
 	}
 
 	public BasicConfiguration(int totalTickets, double ticketReleaseRate, double customerRetrievalRate,
@@ -64,13 +67,15 @@ public class BasicConfiguration {
 		this.maxTicketCapacity = maxTicketCapacity;
 	}
 	
-	public void saveConfigarations(BasicConfiguration configObj) {
+	public boolean saveConfigarations(BasicConfiguration configObj) {
 		String gsonObj = gson.toJson(configObj);
 		try (FileWriter config = new FileWriter("src/main/resources/config.json")) {  // this method automatically close the file
 			config.write(gsonObj);
             System.out.println(Black+Lightblue+"DATA SAVED SUCCESSFULLY"+RESET);
+            return true;
         } catch (IOException e) {
             System.out.println("Some error occured");
+            return false;
         }
 	}
 	

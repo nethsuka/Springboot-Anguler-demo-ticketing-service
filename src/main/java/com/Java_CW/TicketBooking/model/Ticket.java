@@ -1,17 +1,22 @@
-package com.Java_CW.TicketBooking.javaCLI;
+package com.Java_CW.TicketBooking.model;
 
+import org.springframework.stereotype.Component;
+
+@Component
 public class Ticket {
 
 	private String name;
 	private int tickitId;
 
+	public Ticket() {
+		
+	}
+	
 	public Ticket(String name) {
-		super();
 		this.name = name;
 	}
 	
 	public Ticket(int tickitId) {
-		super();
 		this.tickitId = tickitId;
 	}
 

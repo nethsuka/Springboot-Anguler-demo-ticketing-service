@@ -6,6 +6,10 @@ import java.util.Scanner;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
+import com.Java_CW.TicketBooking.model.Customer;
+import com.Java_CW.TicketBooking.model.TicketPool;
+import com.Java_CW.TicketBooking.model.Vendor;
+
 public class ApplicationConfig {
 
 	public static final String CYAN = "\033[36m";     // Cyan
@@ -63,6 +67,7 @@ public class ApplicationConfig {
 				configuration.setTicketReleaseRate(ticketReleaseRate);
 				configuration.setCustomerRetrievalRate(customerRetrievalRate);
 				configuration.setMaxTicketCapacity(maxTicketCapacity);
+				
 				configuration.saveConfigarations(configuration);
 				break;
 		        

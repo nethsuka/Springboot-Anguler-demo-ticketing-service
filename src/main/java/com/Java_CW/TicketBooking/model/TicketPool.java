@@ -1,4 +1,4 @@
-package com.Java_CW.TicketBooking.javaCLI;
+package com.Java_CW.TicketBooking.model;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -6,11 +6,15 @@ import java.util.List;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.springframework.stereotype.Component;
 
+import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
+
+@Component
 public class TicketPool {
 	
     
-    List<Ticket> tickets = new ArrayList<>();
+    ArrayList<Ticket> tickets = new ArrayList<>();
     List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
     
     private static int ticketNo = 0;
@@ -37,14 +41,16 @@ public class TicketPool {
     }
 
 	
-	public synchronized void removeTicket(int customerId) {
-		if (synchronizedList.isEmpty()) {
-            logger.info("Customer "+customerId+" tried but No tickets available.");
-            return;
-        }
-		logger.info("ticket "+synchronizedList.get(0).getTickitId()+" bought by customer "+customerId);
-        synchronizedList.remove(0);
-        totalTicketsSold += 1;
+	public synchronized void removeTicket(int customerId, double customerRetrievalRate) {
+		for(int i = 0; i < customerRetrievalRate; i++) {
+			if (synchronizedList.isEmpty()) {
+	            logger.info("Customer "+customerId+" tried but No tickets available.");
+	            return;
+	        }
+			logger.info("ticket "+synchronizedList.get(0).getTickitId()+" bought by customer "+customerId);
+	        synchronizedList.remove(0);
+	        totalTicketsSold += 1;
+		}
 	}
 
 	public int getTotalTicketsSold() {
