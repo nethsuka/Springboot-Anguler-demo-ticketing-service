@@ -23,24 +23,44 @@ export class ConfigFormComponent {
     constructor (private config: ConfigurationService) {}
 
     saveConfig(): void {
-      const configData: Configuration = {
-        totalTickets: +this.totalNumberOfTickets,  // Convert to number
-        ticketReleaseRate: +this.ticketReleasingRate,  
-        customerRetrievalRate: +this.customerRetrievalRate,  
-        maxTicketCapacity: +this.maxTicketCapacity  
-      };
+      if (this.isFormValid()) {
+        const configData: Configuration = {
+          totalTickets: +this.totalNumberOfTickets, // Convert to number
+          ticketReleaseRate: +this.ticketReleasingRate,
+          customerRetrievalRate: +this.customerRetrievalRate,
+          maxTicketCapacity: +this.maxTicketCapacity,
+        };
   
-      // Call the service to send the POST request
-      this.config.saveConfiguration(configData).subscribe(
-        (response) => {
-          console.log('Configuration saved successfully:', response);
-          if(response){
-            alert("Configuration saved successfully")
-          }else{
-            alert("Coulden't save Configuration")
+        // Call the service to send the POST request
+        this.config.saveConfiguration(configData).subscribe(
+          (response) => {
+            console.log('Configuration saved successfully:', response);
+            if(response){
+              alert("Configuration saved successfully")
+            }else{
+              alert("Coulden't save Configuration")
+            }
           }
-        }
-      );
+        );
+      }else{
+        alert("Total Tickets sholud be less than Max Ticket Capacity.");
+      }
+    }
+  
+    isFormValid(): boolean {
+      const totalTicketsValid = this.isValidNumber(this.totalNumberOfTickets);
+      const releaseRateValid = this.isValidNumber(this.ticketReleasingRate);
+      const retrievalRateValid = this.isValidNumber(this.customerRetrievalRate);
+      const capacityValid = this.isValidNumber(this.maxTicketCapacity);
+
+      const totalLessThanCapacity = +this.totalNumberOfTickets < +this.maxTicketCapacity;
+
+      return totalTicketsValid && releaseRateValid && retrievalRateValid && capacityValid && totalLessThanCapacity;
+    }
+
+    isValidNumber(value: string): boolean {
+      const numberValue = +value;
+      return !isNaN(numberValue) && numberValue >= 0;
     }
 
     ngOnInit(): void {

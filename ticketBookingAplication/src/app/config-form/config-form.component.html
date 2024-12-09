@@ -1,25 +1,49 @@
-
 <div class="w-full max-w-sm p-2 bg-white border border-gray-200 rounded-lg shadow sm:p-6 md:p-8 dark:bg-gray-800 dark:border-gray-700">
-    <form class="space-y-2" #actorForm="ngForm">
-        <h5 class="text-xl font-medium text-gray-900 dark:text-white">System Configaration</h5>
+  <form class="space-y-2" #actorForm="ngForm" (ngSubmit)="saveConfig()">
+    <h5 class="text-xl font-medium text-gray-900 dark:text-white">System Configuration</h5>
 
-        <div>
-            <label for="tnot" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total number of tickets</label>
-            <input type="number" [(ngModel)]="totalNumberOfTickets" name="totalNumberOfTickets" id="tnot" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required/>
-        </div>
-        <div>
-            <label for="trr" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ticket releasing rate</label>
-            <input type="number" [(ngModel)]="ticketReleasingRate" name="ticketReleasingRate" id="trr" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required ngModel/>
-        </div>
-        <div>
-            <label for="crr" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Customer retrieval rate</label>
-            <input type="number" [(ngModel)]="customerRetrievalRate" name="crr" id="customerRetrievalRate" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required ngModel/>
-        </div>
-        <div>
-            <label for="mtc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max ticket capacity</label>
-            <input type="number" [(ngModel)]="maxTicketCapacity" name="mtc" id="maxTicketCapacity" class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required ngModel/>
-        </div>
-        
-        <button type="submit" (click)="saveConfig()" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Save Settings</button>
-    </form>
+    <div>
+      <label for="tnot" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Total number of tickets</label>
+      <input type="number" [(ngModel)]="totalNumberOfTickets" #tntModel="ngModel" name="totalNumberOfTickets" id="tnot"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        required min="1" max="10000" />
+      <div *ngIf="tntModel.invalid && tntModel.touched" class="text-red-500 text-xs">
+        <div *ngIf="tntModel.errors?.['required']">Total number of tickets is required.</div>
+      </div>
+    </div>
+
+    <div>
+      <label for="trr" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Ticket releasing rate</label>
+      <input type="number" [(ngModel)]="ticketReleasingRate" #trrModel="ngModel" name="ticketReleasingRate" id="trr"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        required min="1" max="100" />
+      <div *ngIf="trrModel.invalid && trrModel.touched" class="text-red-500 text-xs">
+        <div *ngIf="trrModel.errors?.['required']">Ticket releasing rate is required.</div>
+      </div>
+    </div>
+
+    <div>
+      <label for="crr" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Customer retrieval rate</label>
+      <input type="number" [(ngModel)]="customerRetrievalRate" #crrModel="ngModel" name="customerRetrievalRate" id="customerRetrievalRate"
+        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        required min="1" max="100" />
+      <div *ngIf="crrModel.invalid && crrModel.touched" class="text-red-500 text-xs">
+        <div *ngIf="crrModel.errors?.['required']">Customer retrieval rate is required.</div>
+      </div>
+    </div>
+
+    <div>
+      <label for="mtc" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Max ticket capacity</label>
+      <input type="number" [(ngModel)]="maxTicketCapacity" #mtcModel="ngModel" name="maxTicketCapacity" id="maxTicketCapacity"
+        class="bg-gray-50 mb-3 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+        required min="1" max="5000" />
+      <div *ngIf="mtcModel.invalid && mtcModel.touched" class="text-red-500 text-xs">
+        <div *ngIf="mtcModel.errors?.['required']">Max ticket capacity is required.</div>
+      </div>
+    </div>
+
+    <button type="submit" [disabled]="actorForm.invalid" class="w-full text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">
+      Save Settings
+    </button>
+  </form>
 </div>
