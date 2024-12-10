@@ -1,5 +1,7 @@
 package com.Java_CW.TicketBooking.service;
 
+import java.util.List;
+
 import org.springframework.stereotype.Service;
 
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
@@ -12,6 +14,7 @@ public class TicketSellService {
 	
 	public TicketPool ticketPool;
 	public BasicConfiguration configuration;
+	
 	
 	Thread t1;
 	Thread t2;
@@ -72,6 +75,7 @@ public class TicketSellService {
 	    if (t5 != null) t5.interrupt();
 	    if (t6 != null) t6.interrupt();
 	    if (t7 != null) t7.interrupt();
+	    ticketPool.clearConsoleOutputArray();
 	    System.out.println("All threads interrupted.");
 	}
 	
@@ -86,4 +90,9 @@ public class TicketSellService {
 			return false;
 		}
 	}
+	
+	public List<String> addOutputsToArray() {
+        return ticketPool.getOutputMsgArray();   
+    }
+	
 }

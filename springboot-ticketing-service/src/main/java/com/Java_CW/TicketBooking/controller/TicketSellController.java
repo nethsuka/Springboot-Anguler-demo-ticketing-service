@@ -1,5 +1,7 @@
 package com.Java_CW.TicketBooking.controller;
 
+import java.util.List;
+
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -40,4 +42,9 @@ public class TicketSellController {
 	public void stopRunnning() {
 		ticketSellService.stopThreads();
 	}
+	
+	@GetMapping("/outputs")
+    public List<String> getMessages() {
+        return ticketSellService.addOutputsToArray();
+    }
 }
