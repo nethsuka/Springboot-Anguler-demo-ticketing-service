@@ -17,8 +17,8 @@ public class TicketPool implements TicketPoolInterface{
 	/**
 	 * synchronized array list
 	 */
-    ArrayList<Ticket> tickets = new ArrayList<>();
-    List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
+    private ArrayList<Ticket> tickets = new ArrayList<>();
+    private List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
     
     // array that collects data to sent to the front-end
     private List<String> consoleOutputs = Collections.synchronizedList(new ArrayList<>());
@@ -28,7 +28,7 @@ public class TicketPool implements TicketPoolInterface{
     private int totalTicketsSold = 0;
     
     //logger instance
-    private static final Logger logger = LogManager.getLogger(TicketPool.class); // logger instance
+    private static Logger logger = LogManager.getLogger(TicketPool.class); // logger instance
 
 
     BasicConfiguration config = new BasicConfiguration();
@@ -63,7 +63,7 @@ public class TicketPool implements TicketPoolInterface{
      * This synchronized function remover tickets from the tickets array
      */
 	@Override
-	public synchronized void removeTicket(int customerId, double customerRetrievalRate) {
+	public synchronized void removeTicket(int customerId, int customerRetrievalRate) {
 		String msg;
 		for(int i = 0; i < customerRetrievalRate; i++) {
 			if (synchronizedList.isEmpty()) {

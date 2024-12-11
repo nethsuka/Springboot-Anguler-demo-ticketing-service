@@ -14,5 +14,5 @@ public interface TicketPoolInterface {
 	 * @param customerId
 	 * @param customerRetrievalRate
 	 */
-	void removeTicket(int customerId, double customerRetrievalRate);
+	void removeTicket(int customerId, int customerRetrievalRate);
 }

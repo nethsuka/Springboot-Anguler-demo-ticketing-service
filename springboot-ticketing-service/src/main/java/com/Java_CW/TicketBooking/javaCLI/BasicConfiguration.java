@@ -20,7 +20,7 @@ public class BasicConfiguration {
     public static final String RED = "\033[31m";    // Red color
 
     //logger instance 
-	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class);
+	private static Logger logger = LogManager.getLogger(BasicConfiguration.class);
     
 	static Gson gson = new Gson();
     
