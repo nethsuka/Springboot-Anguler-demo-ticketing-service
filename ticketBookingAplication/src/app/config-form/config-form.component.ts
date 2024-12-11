@@ -13,6 +13,7 @@ import { ConfigurationService } from '../configuration-service.service';
 
 export class ConfigFormComponent {
 
+    //form inputs
     totalNumberOfTickets = '';
     ticketReleasingRate = '';
     customerRetrievalRate = '';
@@ -22,6 +23,7 @@ export class ConfigFormComponent {
 
     constructor (private config: ConfigurationService) {}
 
+    //send form data to the backend
     saveConfig(): void {
       if (this.isFormValid()) {
         const configData: Configuration = {
@@ -47,6 +49,7 @@ export class ConfigFormComponent {
       }
     }
   
+    //validate form inputs
     isFormValid(): boolean {
       const totalTicketsValid = this.isValidNumber(this.totalNumberOfTickets);
       const releaseRateValid = this.isValidNumber(this.ticketReleasingRate);
@@ -58,11 +61,13 @@ export class ConfigFormComponent {
       return totalTicketsValid && releaseRateValid && retrievalRateValid && capacityValid && totalLessThanCapacity;
     }
 
+    // check whether its a number or not and more than or equal to zero
     isValidNumber(value: string): boolean {
       const numberValue = +value;
       return !isNaN(numberValue) && numberValue >= 0;
     }
 
+    //Initializing variables on page load
     ngOnInit(): void {
       this.config.getConfiguration().subscribe((data: Configuration) => {
         this.totalNumberOfTickets = data?.totalTickets != null ? data.totalTickets.toString() : "";

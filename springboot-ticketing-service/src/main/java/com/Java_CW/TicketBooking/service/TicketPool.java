@@ -14,20 +14,29 @@ import com.Java_CW.TicketBooking.model.Ticket;
 @Service
 public class TicketPool implements TicketPoolInterface{
 	
+	/**
+	 * synchronized array list
+	 */
     ArrayList<Ticket> tickets = new ArrayList<>();
     List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
     
+    // array that collects data to sent to the front-end
     private List<String> consoleOutputs = Collections.synchronizedList(new ArrayList<>());
     
     private static int ticketNo = 0;
     private int totalTicketsReleased = 0;
     private int totalTicketsSold = 0;
     
+    //logger instance
     private static final Logger logger = LogManager.getLogger(TicketPool.class); // logger instance
 
 
     BasicConfiguration config = new BasicConfiguration();
     
+    /**
+     * This synchronized function add tickets to the tickets array until
+     * total released tickets equals to total number of tickets
+     */
     @Override
     public synchronized void addTickets(int vendorId, int ticketReleaseRate) {        
         for (int i = 0; i < ticketReleaseRate; i++) {
@@ -49,6 +58,10 @@ public class TicketPool implements TicketPoolInterface{
         }
     }
 
+    
+    /**
+     * This synchronized function remover tickets from the tickets array
+     */
 	@Override
 	public synchronized void removeTicket(int customerId, double customerRetrievalRate) {
 		String msg;
@@ -66,6 +79,9 @@ public class TicketPool implements TicketPoolInterface{
 	        totalTicketsSold ++;
 		}
 	}
+	
+	
+	// Getters and setters
 	
 	public List<String> getOutputMsgArray() {
 		return consoleOutputs;

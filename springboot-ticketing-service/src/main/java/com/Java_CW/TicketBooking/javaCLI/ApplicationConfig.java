@@ -13,6 +13,7 @@ import com.Java_CW.TicketBooking.service.TicketPool;
 
 public class ApplicationConfig {
 
+	//color codes
 	public static final String CYAN = "\033[36m";     // Cyan
     public static final String RESET = "\033[0m";   // Reset color
     public static final String RED = "\033[31m";    // Red color
@@ -20,12 +21,14 @@ public class ApplicationConfig {
     public static final String GREEN_BOLD = "\033[1;38;5;46m";    // Green Bold
     public static final String Lightblue = "\033[38;5;123m";
 	
+    //configuration parameters
 	static int totalTickets;
 	static int ticketReleaseRate;
 	static int customerRetrievalRate;
 	static int maxTicketCapacity;
 	
-	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
+	// logger instance
+	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class);
 
 	static Scanner scannerObj = new Scanner(System.in);
 	
@@ -148,7 +151,6 @@ public class ApplicationConfig {
 			default:
 				System.out.print(RED);
 				logger.error("Invalid command!\n"+RESET);
-//				throw new IllegalArgumentException("Unexpected value: " + optionNum);
 			}
 		}
         
@@ -157,6 +159,10 @@ public class ApplicationConfig {
 	}	
 	
 	
+	/**
+	 * This function validate the total ticket count from only getting positive values.
+	 * @return
+	 */
 	public static int validateTotalTickets() {
 		
 		int validTotalTickets;		
@@ -175,6 +181,10 @@ public class ApplicationConfig {
 	}
 		
 	
+	/**
+	 * This function validate the ticket release rate from only getting positive values.
+	 * @return
+	 */
 	public static int validateTicketReleaseRate() {
 		
 		int validTicketReleaseRate;
@@ -192,6 +202,11 @@ public class ApplicationConfig {
 		return validTicketReleaseRate;
 	}
 	
+	
+	/**
+	 * This function validate the customer retrieval rate from only getting positive values.
+	 * @return
+	 */
 	public static int validateCustomerRetrievalRate() {
 		
 		int validCustomerRetrievalRate;
@@ -209,6 +224,12 @@ public class ApplicationConfig {
 		return validCustomerRetrievalRate;
 	}
 	
+	
+	/**
+	 * This function validate the max ticket capacity from getting positive values and it checks 
+	 * whether the max ticket capacity is larger than the total ticket count.
+	 * @return
+	 */
 	public static int validateMaxTicketCapacity() {
 		
 		int validMaxTicketCapacity;

@@ -20,6 +20,7 @@ export class AppComponent{
 
   constructor(private http: HttpClient, private config: ConfigurationService) {}
 
+  //send start program request to the backend
   startTicketSelling() {
     this.http.get("http://localhost:8080/api/start").subscribe({
       next: () => {
@@ -31,6 +32,7 @@ export class AppComponent{
     });
   }
 
+  //send stop program request to the backend
   stopTicketSelling() {
     this.http.get("http://localhost:8080/api/stop").subscribe({
       next: () => {
@@ -42,6 +44,7 @@ export class AppComponent{
     });
   }
 
+  //Initializing variables on page load
   ngOnInit(): void {
     this.config.pollConsoleOutputs(300).subscribe({
       next: (array) => this.consoleOutputs = array,

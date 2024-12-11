@@ -6,20 +6,21 @@ import java.io.IOException;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import com.google.gson.Gson;
 
-@Component
+@Service
 public class BasicConfiguration {
 
+	//color codes
     public static final String Lightblue = "\033[48;5;155m"; // Light blue color
     public static final String RESET = "\033[0m";   // Reset color
     public static final String Black = "\033[30m"; // Black color
     public static final String RED = "\033[31m";    // Red color
 
-
-	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
+    //logger instance 
+	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class);
     
 	static Gson gson = new Gson();
     
@@ -28,10 +29,21 @@ public class BasicConfiguration {
 	private int customerRetrievalRate;
 	private int maxTicketCapacity;
 	
+	
+	/**
+	 * no argument constructor
+	 */
 	public BasicConfiguration() {
 		
 	}
 
+	/**
+	 * four arguments constructor with configuration parameters
+	 * @param totalTickets
+	 * @param ticketReleaseRate
+	 * @param customerRetrievalRate
+	 * @param maxTicketCapacity
+	 */
 	public BasicConfiguration(int totalTickets, int ticketReleaseRate, int customerRetrievalRate,
 			int maxTicketCapacity) {
 		this.totalTickets = totalTickets;
@@ -41,6 +53,7 @@ public class BasicConfiguration {
 		
 	}
 
+	//getters and setters for the four parameters
 	public int getTotalTickets() {
 		return totalTickets;
 	}
@@ -73,6 +86,13 @@ public class BasicConfiguration {
 		this.maxTicketCapacity = maxTicketCapacity;
 	}
 	
+	
+	/**
+	 * Save the four parameters to the config.jason file and returns true 
+	 * if its success otherwise false
+	 * @param configObj
+	 * @return
+	 */
 	public boolean saveConfigarations(BasicConfiguration configObj) {
 	    
 		String gsonObj = gson.toJson(configObj);
@@ -88,6 +108,11 @@ public class BasicConfiguration {
         }
 	}
 	
+	
+	/**
+	 * Read the data from the saved config.json file and return them as an object
+	 * @return
+	 */
 	public BasicConfiguration loadConfigarations() {
 		
 		try (FileReader reader = new FileReader("src/main/resources/config.json")) { // this method automatically close the file

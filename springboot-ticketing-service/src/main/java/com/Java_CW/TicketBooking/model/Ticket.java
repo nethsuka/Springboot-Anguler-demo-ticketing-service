@@ -5,29 +5,22 @@ import org.springframework.stereotype.Component;
 @Component
 public class Ticket {
 
-	private String name;
 	private int tickitId;
 
+	/**
+	 * No arguments constructor
+	 */
 	public Ticket() {
 		
-	}
-	
-	public Ticket(String name) {
-		this.name = name;
 	}
 	
 	public Ticket(int tickitId) {
 		this.tickitId = tickitId;
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
+	
+	// Getters and Setters
+	
 	public int getTickitId() {
 		return tickitId;
 	}

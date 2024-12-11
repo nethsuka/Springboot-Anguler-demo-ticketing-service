@@ -14,7 +14,7 @@ public class TicketSellService {
 	public TicketPool ticketPool;
 	public BasicConfiguration configuration;
 	
-	
+	// thread instances 
 	Thread t1;
 	Thread t2;
 	
@@ -24,11 +24,20 @@ public class TicketSellService {
 	Thread t6;
 	Thread t7;
 	
+	
+	/**
+	 * Dependency injection
+	 * @param ticketPool
+	 * @param configuration
+	 */
 	public TicketSellService(TicketPool ticketPool, BasicConfiguration configuration) {
 		this.ticketPool = ticketPool;
 		this.configuration = configuration;
 	}
 	
+	/**
+	 * This function runs threads 
+	 */
 	public void runThreads() {
 		
 		// Reinitialize TicketPool and configuration for fresh state
@@ -66,6 +75,10 @@ public class TicketSellService {
 	    }
 	}
 	
+	/**
+	 * This function interrupt the threads, clear ticket pool consoleOutputs array,
+	 * and set total tickets to zero
+	 */
 	public void stopThreads() {
 		if (t1 != null) t1.interrupt();
 	    if (t2 != null) t2.interrupt();
@@ -79,10 +92,21 @@ public class TicketSellService {
 	    System.out.println("All threads interrupted.");
 	}
 	
+	
+	/**
+	 * Function that returns the configuration
+	 * @return
+	 */
 	public BasicConfiguration getConfigData() {
 		return configuration.loadConfigarations();
 	}
 	
+	
+	/**
+	 * Function that save configuration data which receives from the fronted. 
+	 * @param configData
+	 * @return
+	 */
 	public boolean saveConfigData(BasicConfiguration configData) {
 		if(configuration.saveConfigarations(configData)) {
 			return true;
@@ -91,10 +115,20 @@ public class TicketSellService {
 		}
 	}
 	
+	
+	/**
+	 * Function that returns the consoleOutputs array  
+	 * @return
+	 */
 	public List<String> addOutputsToArray() {
         return ticketPool.getOutputMsgArray();   
     }
 	
+	
+	/**
+	 * Function that returns the sold ticket count 
+	 * @return
+	 */
 	public int getSouldTickets() {
 		return ticketPool.getTotalTicketsSold();
 	}

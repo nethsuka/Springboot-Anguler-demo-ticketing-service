@@ -1,7 +1,10 @@
 package com.Java_CW.TicketBooking.model;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.Java_CW.TicketBooking.javaCLI.ApplicationConfig;
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
 import com.Java_CW.TicketBooking.service.TicketPool;
 
@@ -11,8 +14,13 @@ public class Vendor implements Runnable{
 	private int vendorId;
 	private TicketPool TicketPoolObj;
 	private BasicConfiguration config;
-	private static int numOfReleasedTickets = 0;
 	
+	//logger instance
+	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class);
+	
+	/**
+	 * No argument constructor
+	 */
 	public Vendor() {
 		
 	}
@@ -23,6 +31,10 @@ public class Vendor implements Runnable{
 		this.config = config;
 	}
 
+	
+	/**
+	 * This function allows the vendors to add tickets to the ticket pool
+	 */
 	@Override
 	public void run() {
 		while (TicketPoolObj.getTotalTicketsReleased() < config.loadConfigarations().getTotalTickets()) {
@@ -31,22 +43,15 @@ public class Vendor implements Runnable{
 			try {
 				Thread.sleep(1000);
 			} catch (InterruptedException e) {
-				e.printStackTrace();
+				logger.error("An error occured while trying to sleep the vendor thread");
 			}
         }
 
         try {
 			Thread.sleep(1000);
 		} catch (InterruptedException e) {
-			e.printStackTrace();
+			logger.error("An error occured while trying to sleep the vendor thread");
 		}
 	}
 
-	public static int getNumOfReleasedTickets() {
-		return numOfReleasedTickets;
-	}
-
-	public static void setNumOfReleasedTickets(int numOfReleasedTickets) {
-		Vendor.numOfReleasedTickets = numOfReleasedTickets;
-	}
 }
