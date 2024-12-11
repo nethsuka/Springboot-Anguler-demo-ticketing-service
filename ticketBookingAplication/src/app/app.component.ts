@@ -16,6 +16,7 @@ export class AppComponent{
 
   title = 'Ticket Booking Aplication';
   consoleOutputs: string[] = [];
+  souldTicketCount: number = 0;
 
   constructor(private http: HttpClient, private config: ConfigurationService) {}
 
@@ -45,6 +46,11 @@ export class AppComponent{
     this.config.pollConsoleOutputs(300).subscribe({
       next: (array) => this.consoleOutputs = array,
       error: (error) => console.error('Error fetching messages', error)
+    });
+    
+    this.config.pollSouldTickets(150).subscribe({
+      next: (count) => this.souldTicketCount = count,
+      error: (error) => console.error('Error fetching count', error)
     });
   }
 

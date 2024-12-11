@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
 import com.Java_CW.TicketBooking.model.Customer;
-import com.Java_CW.TicketBooking.model.TicketPool;
 import com.Java_CW.TicketBooking.model.Vendor;
 
 @Service
@@ -76,6 +75,7 @@ public class TicketSellService {
 	    if (t6 != null) t6.interrupt();
 	    if (t7 != null) t7.interrupt();
 	    ticketPool.clearConsoleOutputArray();
+	    ticketPool.setTotalTicketsSold(0);
 	    System.out.println("All threads interrupted.");
 	}
 	
@@ -94,5 +94,9 @@ public class TicketSellService {
 	public List<String> addOutputsToArray() {
         return ticketPool.getOutputMsgArray();   
     }
+	
+	public int getSouldTickets() {
+		return ticketPool.getTotalTicketsSold();
+	}
 	
 }

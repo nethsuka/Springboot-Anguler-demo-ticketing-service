@@ -1,4 +1,4 @@
-package com.Java_CW.TicketBooking.model;
+package com.Java_CW.TicketBooking.service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -9,9 +9,10 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Service;
 
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
+import com.Java_CW.TicketBooking.model.Ticket;
 
 @Service
-public class TicketPool {
+public class TicketPool implements TicketPoolInterface{
 	
     ArrayList<Ticket> tickets = new ArrayList<>();
     List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
@@ -27,25 +28,28 @@ public class TicketPool {
 
     BasicConfiguration config = new BasicConfiguration();
     
-    public synchronized void addTickets(int vendorId, double ticketReleaseRate) {
+    @Override
+    public synchronized void addTickets(int vendorId, int ticketReleaseRate) {        
         for (int i = 0; i < ticketReleaseRate; i++) {
             if (totalTicketsReleased >= config.loadConfigarations().getTotalTickets()) {
-            	String msg = "Vendor " + vendorId + " cannot add more tickets. Tickets are finished.";
+                String msg = "Vendor " + vendorId + " cannot add more tickets. Tickets are finished.";
                 logger.info(msg);
                 consoleOutputs.add(msg);
                 break;
             }
+
             ticketNo += 1;
             Ticket ticket = new Ticket(ticketNo);
             synchronizedList.add(ticket);
             totalTicketsReleased++;
+
             String msg = "Vendor " + vendorId + " added ticket " + ticketNo;
             logger.info(msg);
-            consoleOutputs.add(msg);
+            consoleOutputs.add(msg); 
         }
     }
 
-	
+	@Override
 	public synchronized void removeTicket(int customerId, double customerRetrievalRate) {
 		String msg;
 		for(int i = 0; i < customerRetrievalRate; i++) {
@@ -59,7 +63,7 @@ public class TicketPool {
 			logger.info(msg);
 			consoleOutputs.add(msg);
 	        synchronizedList.remove(0);
-	        totalTicketsSold += 1;
+	        totalTicketsSold ++;
 		}
 	}
 	

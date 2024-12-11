@@ -47,4 +47,9 @@ public class TicketSellController {
     public List<String> getMessages() {
         return ticketSellService.addOutputsToArray();
     }
+	
+	@GetMapping("/sould-tickets")
+	public int getTickets() {
+		return ticketSellService.getSouldTickets();
+	}
 }

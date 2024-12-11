@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {FormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Configuration } from '../configuration';
 import { ConfigurationService } from '../configuration-service.service';
@@ -65,11 +65,11 @@ export class ConfigFormComponent {
 
     ngOnInit(): void {
       this.config.getConfiguration().subscribe((data: Configuration) => {
-        this.totalNumberOfTickets = data.totalTickets.toString();
-        this.ticketReleasingRate = data.ticketReleaseRate.toString();
-        this.customerRetrievalRate = data.customerRetrievalRate.toString();
-        this.maxTicketCapacity = data.maxTicketCapacity.toString();
+        this.totalNumberOfTickets = data?.totalTickets != null ? data.totalTickets.toString() : "";
+        this.ticketReleasingRate = data?.ticketReleaseRate != null ? data.ticketReleaseRate.toString() : "";
+        this.customerRetrievalRate = data?.customerRetrievalRate != null ? data.customerRetrievalRate.toString() : "";
+        this.maxTicketCapacity = data?.maxTicketCapacity != null ? data.maxTicketCapacity.toString() : "";
       });
-    }
+    }    
 
 }

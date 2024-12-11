@@ -6,10 +6,12 @@ import { Observable, interval, switchMap } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
+
 export class ConfigurationService {
 
   private url1 = "http://localhost:8080/api/config-data" ;
-  private url2 = 'http://localhost:8080/api/outputs';
+  private url2 = "http://localhost:8080/api/outputs";
+  private url3 = "http://localhost:8080/api/sould-tickets";
 
   constructor(private http: HttpClient ) {}
 
@@ -28,6 +30,16 @@ export class ConfigurationService {
   pollConsoleOutputs(intervalTime: number): Observable<string[]> {
     return interval(intervalTime).pipe(
       switchMap(() => this.getConsoleOutputs())
+    );
+  }
+
+  public getSouldTickets(): Observable<number> {
+    return this.http.get<number>(this.url3);
+  }
+
+  pollSouldTickets(intervalTime: number): Observable<number> {
+    return interval(intervalTime).pipe(
+      switchMap(() => this.getSouldTickets())
     );
   }
 

@@ -3,6 +3,7 @@ package com.Java_CW.TicketBooking.model;
 import org.springframework.stereotype.Component;
 
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
+import com.Java_CW.TicketBooking.service.TicketPool;
 
 @Component
 public class Customer implements Runnable{

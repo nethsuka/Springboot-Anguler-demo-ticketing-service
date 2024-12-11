@@ -1,5 +1,6 @@
 package com.Java_CW.TicketBooking.javaCLI;
 
+import java.io.File;
 import java.util.InputMismatchException;
 import java.util.Scanner;
 
@@ -7,8 +8,8 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import com.Java_CW.TicketBooking.model.Customer;
-import com.Java_CW.TicketBooking.model.TicketPool;
 import com.Java_CW.TicketBooking.model.Vendor;
+import com.Java_CW.TicketBooking.service.TicketPool;
 
 public class ApplicationConfig {
 
@@ -18,19 +19,21 @@ public class ApplicationConfig {
     public static final String YELLOW_BOLD = "\033[1;38;5;221m";   // Yellow Bold
     public static final String GREEN_BOLD = "\033[1;38;5;46m";    // Green Bold
     public static final String Lightblue = "\033[38;5;123m";
-    
-    private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
-
+	
+	static int totalTickets;
+	static int ticketReleaseRate;
+	static int customerRetrievalRate;
+	static int maxTicketCapacity;
+	
+	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class); // logger instance
 
 	static Scanner scannerObj = new Scanner(System.in);
 	
-	static int totalTickets;
-	static double ticketReleaseRate;
-	static double customerRetrievalRate;
-	static int maxTicketCapacity;
-	
 	static TicketPool ticketPool = new TicketPool();
 	static BasicConfiguration configuration = new BasicConfiguration();
+
+	private static String filePath = "src/main/resources/config.json";
+    private static File configFile = new File(filePath);
 
 	public static void main(String[] args) {
 		
@@ -62,13 +65,17 @@ public class ApplicationConfig {
 		        break;
 		        
 			case "save-config":
-//				BasicConfiguration test = new BasicConfiguration(totalTickets, ticketReleaseRate, customerRetrievalRate, maxTicketCapacity);
-				configuration.setTotalTickets(totalTickets);
-				configuration.setTicketReleaseRate(ticketReleaseRate);
-				configuration.setCustomerRetrievalRate(customerRetrievalRate);
-				configuration.setMaxTicketCapacity(maxTicketCapacity);
-				
-				configuration.saveConfigarations(configuration);
+				if (totalTickets == 0 && ticketReleaseRate == 0 && customerRetrievalRate == 0 && maxTicketCapacity == 0) {
+					System.out.print(YELLOW_BOLD);
+					logger.warn("Please do the configuration."+RESET);
+				}else {
+					configuration.setTotalTickets(totalTickets);
+					configuration.setTicketReleaseRate(ticketReleaseRate);
+					configuration.setCustomerRetrievalRate(customerRetrievalRate);
+					configuration.setMaxTicketCapacity(maxTicketCapacity);
+					
+					configuration.saveConfigarations(configuration);
+				}
 				break;
 		        
 			case "help":
@@ -78,15 +85,19 @@ public class ApplicationConfig {
 				System.out.println("\t\t"+GREEN_BOLD+"save-config"+RESET+"     Save configurations");
 				System.out.println("\t\t"+GREEN_BOLD+"show-config"+RESET+"     Show configurations");
 				System.out.println("\t\t"+GREEN_BOLD+"help"+RESET+"            Get help");
-				System.out.println("\t\t"+GREEN_BOLD+"exit"+RESET+"            Quit");
-				
-				System.out.println(ticketPool.getSynchronizedList());
-//				BasicConfiguration test2 = new BasicConfiguration();
-//				configuration.loadConfigarations();
+				System.out.println("\t\t"+GREEN_BOLD+"exit"+RESET+"            Quit Program");
 				break;
 				
 			case "start":
 
+			    if (!configFile.exists()) {
+			    	System.out.print(YELLOW_BOLD);
+			        logger.warn("Configuration file does not exist, Please make a one."+RESET);
+			        break;
+			    }
+			    
+			    System.out.print(Lightblue);
+			    
 				ticketPool.setTotalTicketsReleased(0);
 				ticketPool.setTotalTicketsSold(0);
 				
@@ -116,37 +127,10 @@ public class ApplicationConfig {
 					t6.join();
 					t7.join();
 			    } catch (InterruptedException e) {
-			        e.printStackTrace();
+			    	System.out.print(RED);
+			        logger.error("Error occured while running threads"+RESET);
 			    }
-				break;
-				
-			case "bt":
-				
-				int vendorCount = 4;
-				int customerCount = 7;
-				
-				Thread[] threads = new Thread[vendorCount+customerCount];
-				
-				
-				for(int i=0 ; i<vendorCount ; i++) {
-					threads[i] = new Thread(new Vendor(i, ticketPool, configuration));
-				}
-				
-				for(int i=0 ; i<customerCount ; i++) {
-					threads[vendorCount+i] = new Thread(new Customer(i, ticketPool, configuration));
-				}
-				
-				try {
-					for (Thread thread : threads) {
-						thread.start();
-//						Thread.sleep(100);
-					}
-					for(Thread thread : threads) {
-						thread.join();
-					}
-			    } catch (InterruptedException e) {
-			        e.printStackTrace();
-			    }
+				System.out.print(RESET);
 				break;
 				
 			case "show-config":
@@ -162,7 +146,8 @@ public class ApplicationConfig {
 				break;
 				
 			default:
-				System.out.println(RED+"Invalid command!\n"+RESET);
+				System.out.print(RED);
+				logger.error("Invalid command!\n"+RESET);
 //				throw new IllegalArgumentException("Unexpected value: " + optionNum);
 			}
 		}
@@ -173,16 +158,16 @@ public class ApplicationConfig {
 	
 	
 	public static int validateTotalTickets() {
-//		test.setTotalTickets(scannerObj.nextInt());
-		int validTotalTickets;
+		
+		int validTotalTickets;		
 		while (true) {
 			System.out.print(RESET+"Enter the total tickets available in the system : "+YELLOW_BOLD);
             try {
             	validTotalTickets = scannerObj.nextInt();
                 break;
             } catch (InputMismatchException e) {
-//                System.out.println(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
-                logger.error(RED+"Invalid input. Please enter a valid integer.\n"+RESET);
+            	System.out.print(RED);
+                logger.error("Invalid input. Please enter a valid integer.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
             }
         }
@@ -190,16 +175,16 @@ public class ApplicationConfig {
 	}
 		
 	
-	public static double validateTicketReleaseRate() {
-//		test.setTicketReleaseRate(scannerObj.nextDouble());
-		double validTicketReleaseRate;
+	public static int validateTicketReleaseRate() {
+		
+		int validTicketReleaseRate;
 		while (true) {
 			System.out.print(RESET+"Enter vendors ticket release rate : "+YELLOW_BOLD);
 			try {
-				validTicketReleaseRate = scannerObj.nextDouble();
+				validTicketReleaseRate = scannerObj.nextInt();
 				break;
 			} catch(InputMismatchException e) {
-//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+				System.out.print(RED);
                 logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
                 scannerObj.next(); // Clear the invalid input
 			}
@@ -207,18 +192,17 @@ public class ApplicationConfig {
 		return validTicketReleaseRate;
 	}
 	
-	public static double validateCustomerRetrievalRate() {
-//		test.setCustomerRetrievalRate(scannerObj.nextDouble());
+	public static int validateCustomerRetrievalRate() {
 		
-		double validCustomerRetrievalRate;
+		int validCustomerRetrievalRate;
 		while (true) {
 			System.out.print(RESET+"Enter customer retrieval rate : "+YELLOW_BOLD);
 			try {
-				validCustomerRetrievalRate = scannerObj.nextDouble();
+				validCustomerRetrievalRate = scannerObj.nextInt();
 				break;
 			} catch(InputMismatchException e) {
-//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-                logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
+				System.out.print(RED);
+                logger.error("Invalid input. Please enter a valid input.\n"+RESET);
 				scannerObj.next();
 			}
 		}
@@ -226,18 +210,21 @@ public class ApplicationConfig {
 	}
 	
 	public static int validateMaxTicketCapacity() {
-//		test.setMaxTicketCapacity(scannerObj.nextInt());
 		
 		int validMaxTicketCapacity;
 		while (true) {
 			System.out.print(RESET+"Enter the maximum ticket capacity : "+YELLOW_BOLD);
 			try {
 				validMaxTicketCapacity = scannerObj.nextInt();
+				if(validMaxTicketCapacity < totalTickets) {
+					System.out.print(RED);
+					logger.error("Max ticket capacity should be greater than total ticket connt."+RESET);
+					continue;
+				}
 				break;
 			} catch(InputMismatchException e) {
-//				System.out.println(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-                logger.error(RED+"Invalid input. Please enter a valid input.\n"+RESET);
-
+				System.out.print(RED);
+                logger.error("Invalid input. Please enter a valid input.\n"+RESET);
 				scannerObj.next();
 			}
 		}
