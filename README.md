@@ -143,7 +143,7 @@ The CLI supports the following commands for system configuration and control:
 ## Screenshots
 
 #### GUI Interface
-![App Screenshot](https://i.ibb.co/7Ww17DK/fonr.png)
+![App Screenshot](https://i.ibb.co/MPmtjMN/front.png)
 
 #### CLI Interface
 ![App Screenshot](https://i.ibb.co/JpjhPrj/clip.png)
