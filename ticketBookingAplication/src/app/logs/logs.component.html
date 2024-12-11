@@ -1,0 +1,12 @@
+<div class="overflow-y-scroll block w-auto h-screen p-6 bg-white border border-gray-200 rounded-lg shadow">
+  
+  <app-ticket-availability [ticketCount]="souldTicketCount"/>
+  
+  <div *ngIf="consoleOutputs.length == 0" class="block max-w-md p-2 bg-blue-100 border border-gray-200 rounded-lg shadow hover:bg-gray-100 mb-2">
+    <p class="font-normal text-gray-700 dark:text-gray-400">No data to display.</p>
+  </div>
+  
+  <div *ngFor="let output of consoleOutputs" class="block max-w-md p-2 bg-blue-100 border border-gray-200 rounded-lg shadow hover:bg-gray-100 mb-2">
+    <p class="font-normal text-gray-700 dark:text-gray-400">{{ output }}</p>
+  </div>
+</div>

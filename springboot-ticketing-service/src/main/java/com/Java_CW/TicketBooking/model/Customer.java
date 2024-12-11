@@ -4,6 +4,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.stereotype.Component;
 
+import com.Java_CW.TicketBooking.javaCLI.ApplicationConfig;
 import com.Java_CW.TicketBooking.javaCLI.BasicConfiguration;
 import com.Java_CW.TicketBooking.service.TicketPool;
 
@@ -15,7 +16,7 @@ public class Customer implements Runnable{
 	private TicketPool ticketPool;
 	
 	//logger instance
-	private static Logger logger = LogManager.getLogger(Customer.class);
+	private static Logger logger = LogManager.getLogger(ApplicationConfig.class);
 	
 	/**
 	 * No argument constructor

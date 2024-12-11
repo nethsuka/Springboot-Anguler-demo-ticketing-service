@@ -17,8 +17,8 @@ public class TicketPool implements TicketPoolInterface{
 	/**
 	 * synchronized array list
 	 */
-    private ArrayList<Ticket> tickets = new ArrayList<>();
-    private List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
+    ArrayList<Ticket> tickets = new ArrayList<>();
+    List<Ticket> synchronizedList = Collections.synchronizedList(tickets);
     
     // array that collects data to sent to the front-end
     private List<String> consoleOutputs = Collections.synchronizedList(new ArrayList<>());

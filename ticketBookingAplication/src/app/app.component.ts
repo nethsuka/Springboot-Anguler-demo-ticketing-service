@@ -4,10 +4,11 @@ import { HttpClient } from '@angular/common/http';
 import { ConfigFormComponent } from './config-form/config-form.component';
 import { ConfigurationService } from './configuration-service.service';
 import { CommonModule } from '@angular/common';
+import { LogsComponent } from './logs/logs.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet, ConfigFormComponent, CommonModule],
+  imports: [RouterOutlet, ConfigFormComponent, CommonModule, LogsComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css'
 })
@@ -15,10 +16,8 @@ import { CommonModule } from '@angular/common';
 export class AppComponent{
 
   title = 'Ticket Booking Aplication';
-  consoleOutputs: string[] = [];
-  souldTicketCount: number = 0;
 
-  constructor(private http: HttpClient, private config: ConfigurationService) {}
+  constructor(private http: HttpClient) {}
 
   //send start program request to the backend
   startTicketSelling() {
@@ -41,19 +40,6 @@ export class AppComponent{
       error: (error) => {
         console.error('Error stop ticket selling process:', error);
       }
-    });
-  }
-
-  //Initializing variables on page load
-  ngOnInit(): void {
-    this.config.pollConsoleOutputs(300).subscribe({
-      next: (array) => this.consoleOutputs = array,
-      error: (error) => console.error('Error fetching messages', error)
-    });
-    
-    this.config.pollSouldTickets(150).subscribe({
-      next: (count) => this.souldTicketCount = count,
-      error: (error) => console.error('Error fetching count', error)
     });
   }
 

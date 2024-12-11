@@ -19,7 +19,7 @@ public class ApplicationConfig {
     public static final String RED = "\033[31m";    // Red color
     public static final String YELLOW_BOLD = "\033[1;38;5;221m";   // Yellow Bold
     public static final String GREEN_BOLD = "\033[1;38;5;46m";    // Green Bold
-    public static final String Lightblue = "\033[38;5;123m"; // light blue
+    public static final String Lightblue = "\033[38;5;123m";
 	
     //configuration parameters
 	static int totalTickets;
@@ -28,7 +28,7 @@ public class ApplicationConfig {
 	static int maxTicketCapacity;
 	
 	// logger instance
-	private static final Logger logger = LogManager.getLogger(ApplicationConfig.class);
+	private static Logger logger = LogManager.getLogger(ApplicationConfig.class);
 
 	static Scanner scannerObj = new Scanner(System.in);
 	
