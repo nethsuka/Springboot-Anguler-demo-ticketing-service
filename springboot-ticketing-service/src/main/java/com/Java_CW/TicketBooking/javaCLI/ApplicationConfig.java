@@ -131,7 +131,7 @@ public class ApplicationConfig {
 					t7.join();
 			    } catch (InterruptedException e) {
 			    	System.out.print(RED);
-			        logger.error("Error occured while running threads"+RESET);
+			        logger.error("Error occurred while running threads"+RESET);
 			    }
 				System.out.print(RESET);
 				break;
@@ -146,6 +146,8 @@ public class ApplicationConfig {
 				
 			case "exit":
 				status = false;
+				System.out.print(Lightblue);
+				logger.info("Program Ended\n"+RESET);
 				break;
 				
 			default:
@@ -239,7 +241,7 @@ public class ApplicationConfig {
 				validMaxTicketCapacity = scannerObj.nextInt();
 				if(validMaxTicketCapacity < totalTickets) {
 					System.out.print(RED);
-					logger.error("Max ticket capacity should be greater than total ticket connt."+RESET);
+					logger.error("Max ticket capacity should be greater than total ticket count."+RESET);
 					continue;
 				}
 				break;
