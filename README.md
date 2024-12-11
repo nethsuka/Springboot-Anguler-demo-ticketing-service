@@ -56,7 +56,7 @@ Access the javaCLI folder which is inside the src folder, and run the `Applicati
 5. **Run the Angular Frontend**
 Navigate to the frontend directory and serve the application:
 ```bash
-cd frontend
+cd ticketBookingAplication
 npm install
 ng serve
 ```
