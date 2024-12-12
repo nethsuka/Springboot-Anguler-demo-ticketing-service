@@ -8,7 +8,6 @@ import { ConfigurationService } from '../configuration-service.service';
   selector: 'app-config-form',
   imports: [FormsModule, CommonModule],
   templateUrl: './config-form.component.html',
-  styleUrl: './config-form.component.css'
 })
 
 export class ConfigFormComponent {

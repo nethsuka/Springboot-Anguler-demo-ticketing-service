@@ -4,7 +4,6 @@ import { Component, input} from '@angular/core';
   selector: 'app-ticket-availability',
   imports: [],
   templateUrl: './ticket-availability.component.html',
-  styleUrl: './ticket-availability.component.css'
 })
 
 export class TicketAvailabilityComponent {

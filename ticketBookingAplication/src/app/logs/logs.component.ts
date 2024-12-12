@@ -8,7 +8,6 @@ import { TicketAvailabilityComponent } from './ticket-availability/ticket-availa
   selector: 'app-logs',
   imports: [CommonModule, TicketAvailabilityComponent],
   templateUrl: './logs.component.html',
-  styleUrl: './logs.component.css'
 })
 export class LogsComponent {
 
